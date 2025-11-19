@@ -1,3 +1,58 @@
+// Load Header and Footer
+async function loadHeaderFooter() {
+    try {
+        // Load header
+        const headerResponse = await fetch('/components/header.html');
+        const headerHTML = await headerResponse.text();
+        document.getElementById('header-placeholder').innerHTML = headerHTML;
+        
+        // Load footer
+        const footerResponse = await fetch('/components/footer.html');
+        const footerHTML = await footerResponse.text();
+        document.getElementById('footer-placeholder').innerHTML = footerHTML;
+        
+        // Set active navigation link based on current page
+        setActiveNavLink();
+        
+        // Re-initialize mobile menu after header is loaded
+        initMobileMenu();
+    } catch (error) {
+        console.error('Error loading header/footer:', error);
+    }
+}
+
+// Set active navigation link based on current page
+function setActiveNavLink() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        const linkPage = link.getAttribute('data-page');
+        if (linkPage && currentPage.includes(linkPage)) {
+            link.classList.add('active');
+        } else if (currentPage === '' || currentPage === 'index.html') {
+            if (link.getAttribute('href') === 'index.html') {
+                link.classList.add('active');
+            }
+        }
+    });
+}
+
+// Initialize mobile menu
+function initMobileMenu() {
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (mobileMenu && navLinks) {
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+    }
+}
+
 // Loading Screen
 window.addEventListener('load', () => {
     setTimeout(() => {
@@ -36,18 +91,6 @@ function updateScrollProgress() {
 }
 
 window.addEventListener('scroll', updateScrollProgress);
-
-// Mobile Menu Toggle
-const mobileMenu = document.querySelector('.mobile-menu');
-const navLinks = document.querySelector('.nav-links');
-
-if (mobileMenu) {
-    mobileMenu.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        mobileMenu.innerHTML = navLinks.classList.contains('active') ? 
-            '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-    });
-}
 
 // Header scroll effect
 window.addEventListener('scroll', () => {
@@ -272,6 +315,7 @@ window.addEventListener('scroll', () => {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
+    loadHeaderFooter();
     createParticles();
     updateScrollProgress();
     setActiveNav();
