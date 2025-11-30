@@ -39,6 +39,26 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
 }
 
+.loader-logo {
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid var(--secondary);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .container {
     width: 100%;
     max-width: 1200px;
@@ -213,13 +233,18 @@ header.scrolled {
     display: inline-block;
 }
 
-.logo:hover .logo-icon {
+.logo-icon img {
+    width: 50px;
+    height: 50px;
+}
+
+.logo:hover {
     transform: rotate(360deg) scale(1.1);
     animation: pulse 1s ease;
 }
 
 .logo-text {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: var(--secondary);
     letter-spacing: -0.5px;
