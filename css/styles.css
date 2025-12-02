@@ -682,6 +682,87 @@ header.scrolled {
     cursor: pointer;
 }
 
+/* Flip Card Enhancements */
+.flip-card {
+    position: relative;
+    perspective: 1200px;
+    min-height: 100%;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.flip-card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotateY(180deg);
+    background-color:#f8ebeb;
+    border-radius: 15px;
+}
+
+.flip-card:hover .flip-card-inner,
+.flip-card:focus .flip-card-inner,
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card:focus { outline: 2px dashed var(--accent); outline-offset: 6px; }
+
+.card-details {
+    list-style: none;
+    margin: 1.2rem 0 0;
+    padding: 0;
+    text-align: left;
+}
+
+.card-details li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--dark);
+    line-height: 1.4;
+}
+
+.card-details li::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: var(--accent);
+    font-size: 0.75rem;
+}
+
+.flip-hint {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-top: 15px;
+}
+
+@media (hover: none) {
+    /* Auto show back on touch devices via class toggle (JS can add .flipped) */
+    .flip-card:hover .flip-card-inner { transform: none; }
+}
+
 .innovation-card::before {
     content: '';
     position: absolute;
@@ -727,6 +808,13 @@ header.scrolled {
 
 .innovation-card p {
     opacity: 0.8;
+}
+
+.core-value:hover {
+    padding: 5px;
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 165, 0, 0.5);
 }
 
 /* Interactive Dryer Demo */
@@ -1055,7 +1143,7 @@ header.scrolled {
 }
 
 .team-image {
-    height: 250px;
+    height: 350px;
     background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
     position: relative;
     display: flex;
@@ -1065,6 +1153,15 @@ header.scrolled {
     font-size: 4rem;
     transition: var(--transition);
     overflow: hidden;
+}
+
+.team-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: relative;
+    z-index: 2;
 }
 
 .team-image::before {
